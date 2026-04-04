@@ -8,19 +8,17 @@ from selenium.webdriver.support import expected_conditions as EC
 
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
-
-driver.implicitly_wait(20) 
 driver.get("http://www.uitestingplayground.com/ajax")
 
-driver.find_element(By.CSS_SELECTOR, "#ajaxButton").click()
+button = WebDriverWait(driver, 20).until(
+    EC.visibility_of_element_located((By.CSS_SELECTOR, "#ajaxButton")))
+button.click()
 
 content = driver.find_element(By.CSS_SELECTOR, "#content")
 
-#wait = WebDriverWait(driver, 15)
-#message = wait.until(EC. visibility_of_element_located((By.CSS_SELECTOR,"div.flash" )))
+wait = WebDriverWait(driver, 20)
+message = wait.until(EC. visibility_of_element_located((By.CSS_SELECTOR,"p.bg-success")))
 
-txt = content.find_element(By.CSS_SELECTOR, "p.bg-success")
-
-print(txt.text)
+print(message.text)
 
 driver.quit()
